@@ -1,0 +1,44 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: github-orchestrator-test
+  title: GitHub Workflow Orchestrator Test
+  description: Trigger a GitHub Actions workflow from Backstage
+spec:
+  type: service
+  owner: platform-team
+
+  parameters:
+    - title: GitHub Workflow Trigger
+      required:
+        - repo
+        - workflowId
+        - ref
+        - githubToken
+      properties:
+        repo:
+          type: string
+          title: GitHub Repository
+          description: "Format: org/repo"
+          default: "c-poteat/vanilla-backstage"
+
+        workflowId:
+          type: string
+          title: Workflow File
+          description: "Workflow filename, e.g., ci.yaml"
+          default: "ci.yaml"
+
+        ref:
+          type: string
+          title: Branch
+          description: "Branch or tag to run the workflow on"
+          default: "main"
+
+  steps:
+    - id: trigger
+      name: Trigger Workflow
+      action: custom-orchestrator:github-workflow
+      input:
+        repo: ${{ parameters.repo }}
+        workflowId: ${{ parameters.workflowId }}
+        ref: ${{ parameters.ref }}

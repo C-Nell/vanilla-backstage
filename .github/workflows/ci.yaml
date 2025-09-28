@@ -1,0 +1,40 @@
+name: CI Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      backstageRunId:
+        description: "Unique ID injected by Backstage"
+        required: true
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-test:
+    name: Build & Test (${{ github.event.inputs.backstageRunId }})
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 0: Echo UUID for debugging/logging
+      - name: Echo Backstage UUID
+        run: echo "Backstage Run ID: ${{ github.event.inputs.backstageRunId }}"
+
+      # Step 1: Checkout source code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
