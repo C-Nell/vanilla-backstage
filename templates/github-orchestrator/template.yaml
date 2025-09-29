@@ -36,7 +36,7 @@ spec:
 
   steps:
     - id: trigger
-      name: Trigger Workflow
+      name: Github Actions Workflow
       action: custom-orchestrator:github-workflow
       input:
         repo: ${{ parameters.repo }}
