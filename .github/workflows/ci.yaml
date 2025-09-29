@@ -22,7 +22,8 @@ jobs:
     steps:
       # Step 0: Echo UUID for debugging/logging
       - name: Echo Backstage UUID
-        run: echo "Backstage Run ID: ${{ github.event.inputs.backstageRunId }}"
+        run: |
+          echo "Backstage Run ID: ${{ github.event.inputs.backstageRunId }}"
 
       # Step 1: Checkout source code
       - name: Checkout repository
