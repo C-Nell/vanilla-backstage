@@ -39,3 +39,6 @@ jobs:
       # Step 3: Install dependencies
       - name: Install dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Sleep for 120 seconds
+        run: sleep 120
